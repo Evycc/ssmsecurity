@@ -1,0 +1,103 @@
+/*START 正文背景*/
+#bg{
+	//margin: 0px;
+	width: 100%;
+}
+#bgVideo{
+	width: 100%;
+	position: relative;
+	z-index: 1;
+}
+/*END 正文背景*/
+
+/*START 注册表单CSS*/
+#registerForm{
+	position: relative;
+	z-index: 2;
+}
+/*注册按钮*/
+#register{
+	color: white;
+	background: #44a344;
+}
+/*START 表单背景渲染*/
+#filterDiv1:after{
+	content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(94, 109, 122, 0.8);
+	opacity:0.2;
+	filter:alpha(opacity=40); /* 针对 IE8 以及更早的版本 */
+	/*filter: blur(3px);*/
+}
+#filterDiv2:after{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(94, 109, 122, 0.8);
+	opacity:0.2;
+	filter:alpha(opacity=40); /* 针对 IE8 以及更早的版本 */
+	/*filter: blur(3px);*/
+}
+/*END 注册表单CSS*/
+
+/*START 登录表单*/
+#loginForm{
+	position: relative;
+	z-index: 2;
+}
+#loginForm h2{
+	text-align: center;
+}
+#loginForm .input-group{
+    height: 54px;
+    font-size: 28px;
+}
+#loginForm .remSpan{
+	/*color: #747474;*/
+	color: white;
+}
+#loginBtn{
+	color: white;
+	background: #44a344;
+	height: 60px;
+	font-size: 24px;
+}
+/*END 登录表单*/
+
+/*START 正文CSS*/
+.context{
+	position: absolute;
+	top: 400px;
+	z-index: 10;
+}
+.context p{
+	color: white;
+}
+.context h2{
+	color: white;
+}
+/*END 正文CSS*/
+
+/*START 错误信息*/
+.error-message{
+	color: white;
+	line-height: 40px;
+	font-size: 20px;
+	font-weight: bold;
+}
+.error-login-message{
+	margin-top: 20px;
+	display: block;
+	font-weight: bold;
+	font-size: 20px;
+	color: #f00;
+	opacity: 0.8;
+}
+/*END 错误信息*/

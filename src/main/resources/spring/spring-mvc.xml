@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd
+       http://www.springframework.org/schema/security
+	    http://www.springframework.org/schema/security/spring-security-4.2.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--扫描指定包下控制器-->
+    <context:component-scan base-package="com.evy.jing"/>
+
+    <!--开启Security方法注释-->
+    <security:global-method-security pre-post-annotations="enabled"/>
+
+    <!--开启注解-->
+    <mvc:annotation-driven/>
+
+    <!--加载静态资源-->
+    <mvc:resources mapping="/static/**" location="WEB-INF/static/"/>
+    <mvc:resources mapping="/views/*" location="WEB-INF/views/"/>
+
+    <!--跨域-->
+    <mvc:cors>
+        <mvc:mapping path="/*" allowed-origins="*" allow-credentials="true"
+                     max-age="1800" allowed-methods="GET,POST,OPTIONS"/>
+    </mvc:cors>
+
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix=""
+          p:suffix=""/>
+
+    <!--START 上传文件配置-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="utf-8"
+          p:maxUploadSizePerFile="1048576"
+          p:resolveLazily="true"/>
+    <!--END 上传文件配置-->
+
+    <!--START 自定义日志 记录程序执行步骤-->
+    <!--<aop:config expose-proxy="true" proxy-target-class="true">-->
+    <!--<aop:pointcut id="myPointcut" expression="execution(* com.evy.jing.controller.*.*(..))-->
+    <!--or execution(* com.evy.jing.security.*.*(..))"/>-->
+    <!--<aop:aspect ref="aopUtils">-->
+    <!--<aop:before method="beforeLog" pointcut-ref="myPointcut"/>-->
+    <!--</aop:aspect>-->
+    <!--</aop:config>-->
+    <!--<bean id="aopUtils" class="com.evy.jing.util.AopUtils"/>-->
+    <!--END 自定义日志-->
+</beans>

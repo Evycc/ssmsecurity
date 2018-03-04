@@ -1,0 +1,25 @@
+body{
+	color: #747474;
+}
+
+/*START 错误信息*/
+.errStr{
+	font-size: 14px;
+}
+.errDiv{
+	border: 0;
+}
+.myinput{
+	height: 50px;
+    font-size: 22px;
+}
+/*END 错误信息*/
+
+/*START 登录按钮样式*/
+#loginBtn{
+	color: white;
+	background: #44a344;
+	height: 60px;
+	font-size: 24px;
+}
+/*END 登录按钮样式*/

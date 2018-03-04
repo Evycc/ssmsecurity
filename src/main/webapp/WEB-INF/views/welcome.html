@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Evy</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/userCss/welcomeCss.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/userCss/headCss.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/userCss/fotterCss.css">
+</head>
+<body ng-app="myApp" ng-controller="indexController as ctrl" class="ng-cloak">
+<!--START Head-->
+<nav id="headNav" class="nav nav-default navbar-static-top" role="navigation">
+    <div id="logo" class="col-xs-6">
+        <canvas id="myCanvas" width="578" height="200"></canvas>
+    </div>
+    <div id="order_head_nav_div" class="col-xs-4">
+        <ul id="order_head_nav" class="breadcrumb">
+            <li>
+                <a href="/main">主页</a>
+            </li>
+            <li>
+                <a href="/login">登陆</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" ng-click="ctrl.disOrHideNav()">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div id="user_Nav_Ul_Div" class="col-xs-2" ng-hide="!ctrl.disUserNav">
+    <ul id="user_Nav_Ul" class="user_nav_box_ul" ng-hide="!ctrl.isUserLogin">
+        <li>
+            <span>{{ctrl.currentUser}}</span>
+        </li>
+        <li>
+            <a href="javascript:void(0)">个人资料</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)">修改密码</a>
+        </li>
+        <li>
+            <a href="/logout">退出登陆</a>
+        </li>
+    </ul>
+    <ul id="noLogin_ul" class="user_nav_box_ul" ng-hide="ctrl.isUserLogin">
+        <li>
+            <h2>还未登录,请先
+                <a href="/login">登录</a>
+            </h2>
+        </li>
+    </ul>
+</div>
+<!--END Head-->
+
+<!--START Body-->
+<div id="bg" class="container">
+    <div class="row">
+        <div>
+            <video id="bgVideo" autoplay="autoplay" loop="loop">
+                <source src="/static/vedio/bg-test-video.mp4" type="video/mp4">
+                <source src="/static/vedio/bg-test-video.webm" type="video/webm">
+            </video>
+            <!--<img id="bgVideo" src="/static/vedio/bg1NEWX.gif"/>-->
+        </div>
+        <!-- START register -->
+        <div id="contextOne" class="context col-xs-5 col-xs-offset-4 collapse">
+            <div id="filterDiv1">
+                <form id="registerForm" class="form-horizontal" role="form"
+                      name="registerForm" ng-submit="ctrl.registerFormSubmit()"
+                      novalidate="novalidate">
+                    <div class="form-title">
+                        <h2>用户注册</h2>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <input type="email" name="email" class="form-control"
+                                   placeholder="邮箱"
+                                   ng-model="ctrl.registerUser.email">
+                            <div id="registerEmailRequiredErr" class="collapse">
+									<label class="label label-danger error-message">
+										此项必须填写
+                                    </label>
+                            </div>
+                            <div id="registerEmailFormatErr" class="collapse">
+									<label class="label label-danger error-message">
+										请填写有效邮箱地址
+                                    </label>
+                            </div>
+                            <div id="registerEmailExistErr" class="collapse">
+									<label class="label label-danger error-message">
+										该邮箱已被注册
+                                    </label>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <input type="password" name="password"
+                                   class="form-control" placeholder="密码"
+                                   ng-model="ctrl.registerUser.password">
+                            <div id="registerPasswordErr" class="collapse">
+									<label class="label label-danger error-message">
+										此项必须填写
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6 col-xs-offset-3">
+                            <button id="register" type="submit"
+                                    class="btn btn-lg btn-block" name="register">免费注册
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p style="text-align:center;">已有账号，
+                            <a href="javascript:void(0)"
+                               ng-click="ctrl.disLoginForm()">登录</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END register -->
+        <!-- START login-->
+        <div id="contextTwo" class="context col-xs-5 col-xs-offset-4 collapse">
+            <div id="filterDiv2">
+                <form id="loginForm" class="form-horizontal" role="form"
+                      name="loginForm" novalidate="novalidate">
+                    <div class="form-title">
+                        <h2>登录</h2>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-6 col-xs-offset-3">
+                                <input type="text" class="form-control
+										input-group input-group-lg"
+                                       name="username"
+                                       placeholder="用户名或电子邮箱"
+                                       ng-model="ctrl.loginUser.email">
+                                <div id="loginUserColl" class="collapse">
+										<label class="label label-danger error-message">
+											用户名或邮箱不存在
+                                        </label>
+                                </div>
+                                <div id="passColl" class="collapse">
+                                    <label class="label label-danger error-message"
+                                           ng-bind="ctrl.loginErrorMessage">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div id="passwordDiv"
+                                 class="col-xs-6 col-xs-offset-3 collapse">
+                                <input type="password" class="form-control
+										input-group input-group-lg"
+                                       name="password" placeholder="密码"
+                                       ng-model="ctrl.loginUser.password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div id="remChk"
+                                 class="col-xs-6 col-xs-offset-3 collapse">
+                                <input type="checkBox" name="rememberMe"
+                                       style="float: left;">
+                                <span class="remSpan">30天内记得我</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div id="loginBtnDiv"
+                                 class="col-xs-6 col-xs-offset-3 collapse">
+                                <input id="loginBtn" type="submit"
+                                       name="loginOrContinue"
+                                       class="form-control btn btn-lg" value="{{!ctrl.loginOrOther ? '继续' : '登陆'}}"
+                                       ng-click="ctrl.loginFormSubmit()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <p style="text-align:center;">
+                                <a href="/changePasswordPage">
+                                    忘记密码?
+                                </a>
+                            </p>
+                        </div>
+                        <div class="row">
+                            <p style="text-align:center;">还没有账号?
+                                <a href="javascript:void(0)"
+                                   ng-click="ctrl.disRegisterForm()">注册</a>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END login-->
+    </div>
+    <!--START Footer-->
+    <footer class="row">
+        <div id="fotter" class="container">
+            <p>2017 Evy</p>
+        </div>
+    </footer>
+    <!--END Footer-->
+</div>
+<!--END Body-->
+
+<!--START HIDE LOGIN FORM-->
+<form id="hide_login_form" action="/login_process" method="post" style="display: none;">
+    <input type="text" name="username" ng-model="ctrl.registerUser.email">
+    <input type="password" name="password" ng-model="ctrl.registerUser.password">
+    <button type="submit"></button>
+</form>
+<!--END HIDE LOGIN FORM-->
+
+<!--START JS-->
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/angular.min.js"></script>
+<script type="text/javascript" src="/static/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/static/js/userJS/app.js"></script>
+<script type="text/javascript" src="/static/js/userJS/indexController.js"></script>
+<script type="text/javascript" src="/static/js/userJS/indexService.js"></script>
+<script type="text/javascript" src="/static/js/userJS/testGoogle.js"></script>
+<!--END JS-->
+</body>
+</html>

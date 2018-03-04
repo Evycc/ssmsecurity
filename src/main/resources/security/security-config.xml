@@ -1,0 +1,74 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+    <http auto-config="true">
+        <!--没有权限处理页面-->
+        <access-denied-handler error-page="/login"/>
+        <!--控制页面访问-->
+        <!--requires-channel="https"-->
+        <intercept-url pattern="/" access="permitAll()"/>
+        <intercept-url pattern="/main" access="hasRole('USER') or hasRole('ROOT')"/>
+        <intercept-url pattern="/user/*" access="hasRole('USER')"/>
+        <intercept-url pattern="/root" access="hasRole('ROOT')"/>
+        <!--<port-mappings>-->
+            <!--<port-mapping http="8080" https="5464"/>-->
+        <!--</port-mappings>-->
+        <!--定义登录表单
+        authentication-success-handler-ref 自定义记录用户最后登录时间-->
+        <form-login login-page="/login"
+                    login-processing-url="/login_process"
+                    username-parameter="username"
+                    password-parameter="password"
+                    authentication-success-handler-ref="recordLoginTimeFilter"/>
+        <csrf disabled="true"/>
+        <!--Logout注销用户-->
+        <logout invalidate-session="true"
+                delete-cookies="JSESSIONID"
+                logout-url="/logout"
+                success-handler-ref="myLogoutHandle"/>
+        <!--记住我
+        token-validity-seconds  单位:s-->
+        <remember-me user-service-ref="customDetailsService"
+                     remember-me-parameter="rememberMe"
+                     remember-me-cookie="evy-remember-cookie"
+                     token-validity-seconds="60"
+                     data-source-ref="dataSource"/>
+        <!--会话管理
+        invalid-session-url 会话失效地址
+        max-sessions    设置单个用户最大并行会话数
+        error-if-maximum-exceeded   配置当用户登录数达到最大时是否报错
+        为true时会报错且后登录的会话不能登录
+        默认为false不报错且将前一会话置为失效-->
+        <session-management>
+            <!--并行控制
+            expired-url 用户被踢出登陆之后跳转页面-->
+            <concurrency-control max-sessions="1" error-if-maximum-exceeded="false"
+                                 expired-url="/login?kickout" />
+        </session-management>
+    </http>
+
+    <!--密码编码器-->
+    <beans:bean id="passwordEcode" class="com.evy.jing.security.PasswordEcode">
+        <beans:constructor-arg name="encodeHashAsBase64" value="true"/>
+        <beans:constructor-arg name="algorithm" value="md5"/>
+    </beans:bean>
+
+    <!--注销后控制-->
+    <beans:bean id="myLogoutHandle" class="com.evy.jing.security.LogoutHandle">
+    </beans:bean>
+
+    <authentication-manager alias="authenticationManager">
+        <!--验证登录身份-->
+        <authentication-provider user-service-ref="customDetailsService">
+            <password-encoder ref="passwordEcode">
+                <salt-source user-property="salt"/>
+            </password-encoder>
+        </authentication-provider>
+    </authentication-manager>
+
+</beans:beans>

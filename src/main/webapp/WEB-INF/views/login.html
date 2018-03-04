@@ -1,0 +1,112 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/userCss/loginCss.css">
+    <!--<link rel="stylesheet" type="text/css" href="/static/css/userCss/fotterCss.css">-->
+</head>
+<body ng-app="myApp" ng-controller="loginController as ctrl" class="ng-cloak">
+<!--START Head-->
+<div id="head" class="container"></div>
+<!--END Head-->
+<!--START Body-->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+            <form id="loginForm" class="form-horizontal" role="form" novalidate="novalidate">
+                <div class="form-title">
+                    <h1 style="text-align: center;">登录</h1>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-6 col-xs-offset-3">
+                            <input type="text" class="form-control myinput"
+                                   name="username"
+                                   placeholder="用户名或电子邮箱"
+                                   ng-model="ctrl.loginUser.email">
+                            <div id="loginUserColl" class="form-control collapse
+									errDiv">
+                                <label class="label label-danger errStr">
+                                    用户名或邮箱不存在。
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div id="passwordDiv"
+                             class="col-xs-6 col-xs-offset-3 collapse">
+                            <input type="password" class="form-control myinput"
+                                   name="password" placeholder="密码"
+                                   ng-model="ctrl.loginUser.password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="passColl" class="col-xs-6 col-xs-offset-3 form-control collapse
+									errDiv" style="width: auto;">
+                            <label class="label label-danger errStr" ng-bind="ctrl.loginErrorMessage">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div id="remChk" class="col-xs-6 col-xs-offset-3 collapse">
+                            <input type="checkBox" name="rememberMe"
+                                   style="float: left;">
+                            <span class="remSpan">30天内记得我</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div id="loginBtnDiv"
+                             class="col-xs-6 col-xs-offset-3">
+                            <input id="loginBtn" type="submit"
+                                   name="loginOrContinue" class="form-control btn btn-lg"
+                                   value="{{!ctrl.loginOrOther ? '继续' : '登陆'}}"
+                                   ng-click="ctrl.loginFormSubmit()">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <p style="text-align:center;">
+                            <a href="/changePasswordPage"
+                               style="color: #44a344;">
+                                忘记密码?
+                            </a>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p style="text-align:center;">还没有账号?
+                            <a href="/">
+                                注册
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <footer>
+            <p style="text-align: center;">2017 Evy</p>
+        </footer>
+    </div>
+</div>
+<!--END Body-->
+
+<!--START JS-->
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/angular.min.js"></script>
+<script type="text/javascript" src="/static/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/static/js/userJS/app.js"></script>
+<script type="text/javascript" src="/static/js/userJS/loginController.js"></script>
+<script type="text/javascript" src="/static/js/userJS/loginService.js"></script>
+<!--END JS-->
+</body>
+</html>

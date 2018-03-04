@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Configuration status="OFF">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %C[%t] %p - %m %n"/>
+        </Console>
+        <Console name="myLogConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %m %n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <!--记录数据库操作-->
+        <!--<Logger name="com.evy.jing.mapper" level="TRACE" additivity="false">-->
+            <!--<AppenderRef ref="Console"/>-->
+        <!--</Logger>-->
+        <!--记录mybatis操作-->
+        <Logger name="org.apache.ibatis" level="TRACE" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <logger name="log4j.logger.druid.sql" level="TRACE" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
+        <logger name="com.evy.jing" level="TRACE" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
+        <Logger name="myLog" level="TRACE" additivity="false">
+            <AppenderRef ref="myLogConsole"/>
+        </Logger>
+    </Loggers>
+</Configuration>

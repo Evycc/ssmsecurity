@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="log4j2"/>
+    </settings>
+    <plugins>
+        <plugin interceptor="com.evy.jing.pageplugin.PagePlugin">
+            <property name="dialect" value="mysql"/>
+            <!--拦截以ListPage结尾的方法-->
+            <property name="pageSqlId" value=".*ListPage$"/>
+        </plugin>
+    </plugins>
+</configuration>

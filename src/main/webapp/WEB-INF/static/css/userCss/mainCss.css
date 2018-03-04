@@ -1,0 +1,450 @@
+body {
+    background-color: #f7ebeb;
+}
+
+thead tr th {
+    text-align: center;
+}
+
+tbody tr {
+    text-align: center;
+}
+
+/*START 导航栏样式*/
+#nav_head {
+    background-color: #2dbe60;
+}
+
+#minHeadImg {
+    width: 20px;
+    height: 20px;
+}
+
+#user_Nav_Ul {
+    left: 14px;
+}
+
+#user_Nav_Ul:before {
+    position: absolute;
+    display: inline-block;
+    content: "";
+    border: 6px solid transparent;
+    border-bottom-color: rgb(255, 255, 255);
+    top: -12px;
+    left: 4px;
+}
+
+/*END 导航栏样式*/
+
+/*START 选项按钮样式*/
+#optionNav {
+    float: right;
+    position: relative;
+    left: 166px;
+    top: -60px;
+}
+
+#optionNav ul {
+    list-style: none;
+    width: 80px
+}
+
+#optionNav ul li a {
+    display: block;
+    width: 20px;
+    text-align: center;
+    color: #fff;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    white-space: pre;
+}
+
+@Keyframes aHover {
+    from {
+        width: 20px;
+    }
+    to {
+        width: 74px;
+    }
+}
+
+#optionNav ul li a:hover {
+    animation: aHover 1s 1 forwards;
+}
+
+#liOne {
+    background-color: #02a817;
+}
+
+#liTwo {
+    background-color: #ffc636;
+}
+
+#liThree {
+    background-color: #d9534f;
+}
+
+/*END 选项按钮样式*/
+
+/*START 主页面内容*/
+#body_box {
+    background-color: #5c87c7;
+}
+
+#h_box {
+    margin-left: 100px;
+}
+
+.row_box {
+    margin-right: 0 !important;
+}
+
+#page_Nav_Box ul {
+    list-style: none;
+}
+
+#page_Nav_Box ul li a {
+    color: #fff;
+    font-size: 20px;
+}
+
+#page_Nav_Box ul li {
+    float: left;
+}
+
+#main_box a {
+    color: #fff;
+}
+
+.user_box_style {
+    margin: 10px;
+    padding: 10px;
+}
+
+.user_span_big {
+    color: #fff;
+    font-size: 60px;
+}
+
+.small_user_box {
+    display: block;
+    width: 100%;
+    line-height: 30px;
+    height: 30px;
+}
+
+.big_user_box {
+
+}
+
+#user_main_ul {
+    position: absolute;
+    left: 0;
+    top: 420px;
+    list-style: none;
+}
+
+#user_main_ul li a {
+    display: block;
+    width: 100px;
+    height: 40px;
+    color: black;
+    font-size: 18px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+
+}
+
+#user_main_ul li a:hover {
+    background: linear-gradient(128deg, #fa2f2f 0%, #ff5b36 90%);
+    color: #fff;
+}
+
+#root_box a {
+    color: #fff;
+}
+
+.number {
+    float: right;
+    font-size: 46px;
+    color: #fff;
+    margin-right: 20px;
+}
+
+.sm_sp {
+    font-size: 18px;
+    top: 4px;
+    left: 4px;
+}
+
+/*END 主页面内容*/
+
+/*START 个人资料*/
+#big_head_box {
+    width: 230px;
+    height: 230px;
+    border-radius: 10px;
+}
+
+.user_info_p {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #747474;
+}
+
+#upload_btn {
+    width: 230px;
+    font-weight: bold;
+}
+
+#user_info_form input {
+    margin-bottom: 10px;
+}
+
+/*END 个人资料*/
+
+/*START 上传图片模态框*/
+.modal-dialog {
+    width: 430px;
+}
+
+#modal_img {
+    width: 100%;
+    height: 100%;
+}
+
+.upload_btn {
+    background-color: #279f43;
+    background-image: linear-gradient(-180deg, #2fcb53 0%, #269f42 90%);
+    border-color: rgba(27, 31, 35, 0.5);
+    color: #fff;
+}
+
+.upload_btn:hover {
+    color: #fff;
+    background-color: #28a745;
+    background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
+}
+
+.close_btn {
+    display: block;
+    width: 20px;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    white-space: pre;
+    background-color: #d9534f;
+    opacity: 1;
+    font-weight: 100;
+}
+
+.close_btn:hover {
+    background: linear-gradient(128deg, #fa2f2f 0%, #ff5b36 90%);
+    opacity: 1;
+    color: #fff;
+}
+
+.upload_error {
+    display: none;
+    padding: 10px 0;
+    color: #cb2431;
+}
+
+/*END 上传图片模态框*/
+
+/*START 错误信息样式*/
+.error-message {
+    color: #fff;
+    line-height: 40px;
+    font-size: 14px;
+}
+
+/*END 错误信息样式*/
+
+/*START 更改密码页面样式*/
+.from_my_box {
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #bdbdbd;
+    background-color: #fff;
+}
+
+.box_header {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #bdbdbd;
+}
+
+.username_input {
+    margin-bottom: 20px;
+    height: 48px;
+    font-size: 24px;
+}
+
+.edit_password_btn {
+    color: #ffffff;
+    background-color: #23954b;
+    border-color: #17833e;
+}
+
+.edit_password_btn:hover {
+    color: #ffffff;
+    background-color: #28a956;
+    border-color: #1b9848;
+}
+
+.form_body {
+    background-color: #f5f5f5;
+    border: 1px solid #e4e4e4;
+    padding: 16px;
+    min-width: 200px;
+}
+
+.message_box {
+    padding: 10px 0;
+    color: #23954b;
+}
+
+.message_box_span {
+    font-size: 18px;
+}
+
+/*END 更改密码页面样式*/
+
+/*START 警告框*/
+.alert_div {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+/*END 警告框*/
+
+/*START 角色管理label*/
+.role_lab {
+    margin: 10px;
+}
+
+.role_options {
+    color: #fff;
+    display: block;
+    border: 1px solid;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: #02a817;
+}
+
+/*END 角色管理label*/
+
+/*start 对话框*/
+.message_content{
+    background: #decccc;
+}
+.message_modal{
+    padding: 0;
+}
+.message_textarea{
+    resize: none;
+    width: 100%;
+    font-size: 16px;
+    font-family: 微软雅黑;
+    border-width: 0;
+}
+.message_textarea:focus{
+    outline:none;
+    outline-offset: 0;
+}
+
+/*滚动条的轨道（里面装有Thumb）*/
+.message_textarea::-webkit-scrollbar-track
+{
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    /*background-color: #F5F5F5;
+    border-radius: 10px;*/
+}
+/*滚动条整体部分*/
+.message_textarea::-webkit-scrollbar
+{
+    width: 10px;
+}
+/*滚动条里面的小方块，能向上向下移动*/
+.message_textarea::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background: linear-gradient(128deg, #337ab7 0%, #7A99D9 90%);
+    /*background-image: -webkit-gradient(linear,*/
+    /*left bottom,*/
+    /*left top,*/
+    /*color-stop(0.44, rgb(122,153,217)),*/
+    /*color-stop(0.72, rgb(73,125,189)),*/
+    /*color-stop(0.86, rgb(28,58,148)));*/
+}
+
+/*头像框*/
+.header_img{
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+}
+/*是否在线*/
+#isOnline_box{
+    display: inline-block;
+    line-height: 16px;
+}
+.isOnline_dis{
+    width: 14px;
+    height: 14px;
+    background: #3ca013;
+    border-radius: 30px;
+    display: block;
+    margin-left: 10px;
+    float: left;
+    margin-right: 4px;
+}
+
+/*消息正文框*/
+#message_body{
+    height: 220px;
+    background: #decccc;
+    overflow: auto;
+    padding: 10px;
+}
+
+/*输入框*/
+.message_input{
+    background: #e4d7d7;
+}
+#input_message{
+    height: 80px;
+    background: #e4d7d7;
+}
+/*发送按钮*/
+.send_btn{
+    width: 100px;margin: 4px;
+}
+
+/*消息对话框*/
+.msg_box{
+    background: #fff;
+    padding: 6px 16px;
+    margin: 4px;
+    border-radius: 4px;
+    word-wrap:break-word;
+    /*消息有一定长度时,改为block*/
+    display: inline-block;
+}
+.message_from{
+    float: right;
+}
+.message_row{
+    margin-right: 0;
+    margin-left: 0;
+}
+.message_date{
+    font-size: 10px;
+    text-align: center;
+}
+/*end 对话框*/

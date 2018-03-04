@@ -1,0 +1,16 @@
+.center_img{
+    text-align: center;
+}
+.btn_a{
+    text-decoration: none;
+    display: block;
+    height: 40px;
+    width: 240px;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #58595b;
+    font-size: 18px;
+    color: #5d9dc1;
+    margin: 10px auto;
+    border-radius: 20px
+}

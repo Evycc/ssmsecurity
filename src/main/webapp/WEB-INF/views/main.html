@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户主页</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/userCss/headCss.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/userCss/mainCss.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/userCss/jing.css">
+    <!--JCROP-->
+    <link rel="stylesheet" type="text/css" href="/static/plugin/jcrop/css/jquery.Jcrop.min.css">
+</head>
+<body ng-app="myApp" ng-controller="userMainController as ctrl" class="ng-cloak">
+<header>
+    <nav id="nav_head" class="nav nav-default navbar-fixed-top"
+         role="navigation" style="display: none;">
+        <div class="container">
+            <div class="row">
+                <div id="nav_div" class="col-xs-10">
+                    <div class="nav_header">
+                        <a href="/" class="navbar-brand" style="color: #fff; font-weight: bold;">Evy</a>
+                    </div>
+                    <ul class="nav navbar-nav user_nav" style="float: right;">
+                        <li class="user_head">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle='dropdown'>
+                                <img id="minHeadImg" alt="头像">
+                                <span class="caret" class="dropdown-toggle"
+                                      data-toggle='dropdown'></span>
+                            </a>
+                            <ul id="user_Nav_Ul" class="dropdown-menu">
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <span id="user_name" ng-bind="ctrl.currentUsername"></span>
+                                        <label class="label label-danger" ng-bind="ctrl.currentUserRole">
+                                        </label>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="ctrl.disUserInfoPage()">个人资料</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="ctrl.disEditPasswordPage()">修改密码</a>
+                                    <a id="logout_btn" href="/logout">退出登陆</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <div class="row">
+        <div id="logo" class="col-xs-6">
+            <a href="/">
+                <canvas id="myCanvas" width="578" height="200"></canvas>
+            </a>
+        </div>
+        <div id="user_head_div" class="col-xs-6">
+            <div id="myId" class="col-xs-4">
+                <h1 ng-bind="ctrl.currentUsername"></h1>
+                <a href="javascript:void(0);"
+                   class="dropdown-toggle" data-toggle="dropdown">
+                    <label class="label label-danger" ng-bind="ctrl.currentUserRole">
+                    </label>
+                </a>
+            </div>
+            <div class="col-xs-3">
+                <div id="headImgDiv" class="thumbnail">
+                    <img id="headImg" alt="头像">
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div id="optionNav">
+                <ul>
+                    <!--one: 个人资料修改-->
+                    <li>
+                        <a id="liOne" href="javascript:void(0);" ng-click="ctrl.disUserInfoPage()"
+                           ng-mouseover="ctrl.liOnMouseOver('liOne')"
+                           ng-mouseout="ctrl.liOnMouseOut('liOne')"> </a>
+                    </li>
+                    <!--two: 更改密码-->
+                    <li>
+                        <a id="liTwo" href="javascript:void(0);" ng-click="ctrl.disEditPasswordPage()"
+                           ng-mouseover="ctrl.liOnMouseOver('liTwo')"
+                           ng-mouseout="ctrl.liOnMouseOut('liTwo')"> </a>
+                    </li>
+                    <!--three: 退出登录-->
+                    <li>
+                        <a id="liThree" href="/logout"
+                           ng-mouseover="ctrl.liOnMouseOver('liThree')"
+                           ng-mouseout="ctrl.liOnMouseOut('liThree')"> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--START BODY-->
+<div id="body_box" class="row row_box">
+    <div class="row row_box">
+        <div id="h_box" class="col-xs-2">
+            <h2 ng-bind="ctrl.childPage == '' ?
+                ctrl.currentPage == '' ?  '首页' : ctrl.currentPage
+                : ctrl.childPage"></h2>
+        </div>
+    </div>
+    <div id="page_Nav_Box" class="row row_box">
+        <div class="col-xs-4" style="margin-left: 100px;">
+            <ul>
+                <li id="onePage">
+                    <a href="javascript:void(0);" ng-click="ctrl.disMainPage()">
+                        <span class="glyphicon glyphicon-home"></span>
+                        首页
+                    </a>
+                    <span class="glyphicon glyphicon-chevron-right" ng-show="ctrl.currentPage"
+                          style="color: #fff;"></span>
+                </li>
+                <li id="currentPage">
+                    <a href="javascript:void(0);" ng-bind="ctrl.currentPage" ng-click="ctrl.disCurrentPage()"></a>
+                    <span class="glyphicon glyphicon-chevron-right" ng-show="ctrl.childPage"
+                          style="color: #fff;"></span>
+                </li>
+                <li id="childPage">
+                    <a href="javascript:void(0);" ng-bind="ctrl.childPage"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="user_box" class="container">
+    <div class="row">
+        <!--START 用户信息-->
+        <!--START currentPage 个人资料box-->
+        <div id="main_box" ng-hide="!ctrl.isShowUserPage">
+            <div class="col-xs-2 user_box_style" style="background: #5c87c7;">
+                <div class="big_user_box">
+						<span class="glyphicon glyphicon-user
+							user_span_big"></span>
+                </div>
+                <a href="javascript:void(0);" class="small_user_box" ng-click="ctrl.disUserInfoPage()">
+                    个人资料更改
+                    <span class="glyphicon glyphicon-circle-arrow-right sm_sp">
+						</span>
+                </a>
+            </div>
+            <!--END currentPage 个人资料box-->
+            <!--START currentPage 密码更改box-->
+            <div class="col-xs-2 user_box_style" style="background: #02a817;">
+                <div class="big_user_box">
+						<span class="glyphicon glyphicon-user
+							user_span_big"></span>
+                </div>
+                <a href="javascript:void(0);" class="small_user_box" ng-click="ctrl.disEditPasswordPage()">
+                    密码更改
+                    <span class="glyphicon glyphicon-circle-arrow-right sm_sp"></span>
+                </a>
+            </div>
+            <!--END currentPage 密码更改box-->
+        </div>
+        <!--END 用户信息-->
+        <!--START 用户管理页面-->
+        <div id="root_box" ng-hide="!ctrl.isShowRootPage">
+            <!--START currentPage 查看在线用户box-->
+            <div class="col-xs-4 user_box_style" style="background: #d9534f;">
+                <div class="big_user_box">
+						<span class="glyphicon glyphicon-user
+							user_span_big"></span>
+                    <div class="number" ng-bind="ctrl.currentOnlineNum"></div>
+                </div>
+                <a href="javascript:void(0);" class="small_user_box"
+                   ng-click="ctrl.disOnlineBox()">
+                    查看在线用户
+                    <span class="glyphicon glyphicon-circle-arrow-right sm_sp"></span>
+                </a>
+            </div>
+            <!--END currentPage 查看在线用户box-->
+            <!--START currentPage 权限管理box-->
+            <div class="col-xs-2 user_box_style" style="background: #ef2b36;">
+                <div class="big_user_box">
+						<span class="glyphicon glyphicon-cog
+							user_span_big"></span>
+                </div>
+                <a href="javascript:void(0);" class="small_user_box"
+                   ng-click="ctrl.disRoleManagePage()">
+                    权限管理
+                    <span class="glyphicon glyphicon-circle-arrow-right sm_sp"></span>
+                </a>
+            </div>
+            <!--END currentPage 权限管理box-->
+            <!--START currentPage 所有用户box-->
+            <div class="col-xs-2 user_box_style" style="background: #127c0f;">
+                <div class="big_user_box">
+						<span class="glyphicon glyphicon-list-alt
+							user_span_big"></span>
+                </div>
+                <a href="javascript:void(0);" class="small_user_box"
+                   ng-click="ctrl.disAllUser()">
+                    所有用户
+                    <span class="glyphicon glyphicon-circle-arrow-right sm_sp"></span>
+                </a>
+            </div>
+            <!--END currentPage 所有用户box-->
+        </div>
+        <!--END 用户管理页面-->
+        <!--START childPage 个人资料box-->
+        <div id="user_info" class="col-xs-10 from_my_box" ng-hide="!ctrl.isShowUserInfoPage">
+            <div class="box_header">
+                <h2>个人资料</h2>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <img id="big_head_box" alt="头像">
+                    <p style="margin-top: 10px;">
+                        <button id="upload_btn" type="button" class="btn btn-default"
+                                ng-click="ctrl.clickUpload()">
+                            上传新图片
+                        </button>
+                        <input id="upload_hidden" type="file" style="visibility:hidden;">
+                    </p>
+                    <div id="file_empty" class="upload_error">
+                        此文件为空。
+                    </div>
+                    <div id="file_max_size" class="upload_error">
+                        请上传小于1 MB的图片。
+                    </div>
+                    <div id="file_format" class="upload_error">
+                        我们只支持PNG，GIF或JPG图片。
+                    </div>
+                    <div id="file_no_img" class="upload_error">
+                        只允许上传图片格式文件
+                    </div>
+                </div>
+                <div class="col-xs-4 form_body">
+                    <form id="user_info_form" class="form-horizontal"
+                          role="form" novalidate="novalidate" ng-submit="ctrl.editUserInfo()">
+                        <p>名称</p>
+                        <input type="text" name="" class="form-control"
+                               ng-model="ctrl.userInfoForm.username">
+                        <p>电子邮箱</p>
+                        <input type="email" name="" class="form-control"
+                               ng-model="ctrl.userInfoForm.email" ng-disabled="ctrl.userInfoForm.emailDisabled">
+                        <div id="updateError" class="collapse">
+                            <label class="label label-danger error-message"
+                                   ng-bind="ctrl.userInfoForm.updateErrorMessage"></label>
+                        </div>
+                        <input type="submit" name="" value="提交更改"
+                               class="btn edit_password_btn">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--END childPage 个人资料box-->
+        <!--START 上传图片模态框-->
+        <div id="uploadModal" class="modal fade" data-show="true" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a href="javascript:void(0);"
+                           class="close close_btn" data-dismiss="modal">&times;</a>
+                        <h4 class="modal-title">上传您的新配置文件图像</h4>
+                    </div>
+                    <form ng-submit="ctrl.uploadCutImage()" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="modal_img">
+                                <img id="upload_img" alt="上传图片">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="modal_btn" type="submit" class="btn upload_btn">设置新个人资料图片</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--END 上传图片模态框-->
+        <!--START childPage 更改密码页面-->
+        <div id="editPassword_box" class="col-xs-6 from_my_box" ng-hide="!ctrl.isShowEditPassword">
+            <div class="box_header">
+                <h2>更改密码</h2>
+            </div>
+            <div style="font-size: 20px;">
+                <p>请输入你的用户名或注册电子邮箱。</p>
+                <p>你将收到一封确认邮件，可以重新设置密码。</p>
+            </div>
+            <button id="send_edit_pass_btn" type="button" ng-hide="!ctrl.isShowSendBtn"
+                    class="edit_password_btn btn btn-lg" ng-click="ctrl.sendEditPassword()">
+                发送确认邮件
+            </button>
+            <div class="col-xs-6 form_body message_box" ng-hide="!ctrl.isShowSendMailSuccess">
+                <div class="col-xs-1">
+					<span class="glyphicon glyphicon-ok-sign
+						message_box_span"></span>
+                </div>
+                <div class="col-xs-10">
+                    如果填写的用户名或邮箱正确，
+                    你会立即收到一封重设密码的邮件。
+                </div>
+            </div>
+        </div>
+        <!--END childPage 更改密码页面-->
+        <!--START childPage 所有用户-->
+        <div class="col-xs-10 from_my_box" ng-hide="!ctrl.isShowAllUser">
+            <div class="box_header">
+                <h2>所有用户</h2>
+            </div>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>用户名称</th>
+                    <th>电子邮箱</th>
+                    <th>是否锁定状态</th>
+                    <th>最后登录时间</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="x in ctrl.userList">
+                    <td class="td_font">
+                        <span ng-bind="x.ssoId"></span>
+                    </td>
+                    <td class="td_font">
+                        <span ng-bind="x.email"></span>
+                    </td>
+                    <td class="td_font" style="text-align: center;">
+                        <!--锁定标志-->
+                        <span class="glyphicon glyphicon-ok-sign" ng-hide="x.locked == 'true'"
+                              style="color: #ef2b36; font-size: 18px;"></span>
+                        <!--非锁定标志-->
+                        <span class="glyphicon glyphicon-remove-sign" ng-hide="x.locked == 'false'"
+                              style="color: #02a817; font-size: 18px;"></span>
+                    </td>
+                    <td class="td_font">
+                        <span ng-bind="x.lastTime"></span>
+                    </td>
+                    <td>
+                        <!--非锁定时显示btn-->
+                        <button type="button" class="btn btn-warning" ng-hide="x.locked == 'false'"
+                                ng-click="ctrl.lockedUserById(x.id, x.ssoId)">
+                            锁定
+                        </button>
+                        <!--锁定时显示btn-->
+                        <button type="button" class="btn btn-primary" ng-hide="x.locked == 'true'"
+                                ng-click="ctrl.unLockUserById(x.id)">
+                            解除锁定
+                        </button>
+                        <button type="button" class="btn btn-danger"
+                                ng-click="ctrl.deleteUserById(x.id, x.ssoId)">
+                            删除
+                        </button>
+                        <button type="button" ng-click="ctrl.disMessageModal(x.email)"
+                                class="btn btn-success">发起对话
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul id="dynamic_ul" class="pagination">
+            </ul>
+        </div>
+        <!--END childPage 所有用户-->
+        <!--START childPage 当前在线用户-->
+        <div class="col-xs-8 from_my_box" ng-hide="!ctrl.isShowOnlineBox">
+            <div class="box_header">
+                <h2>当前在线用户</h2>
+            </div>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>用户名称</th>
+                    <th>电子邮箱</th>
+                    <th>最后登录时间</th>
+                    <th width="10%"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="x in ctrl.userListPage | limitTo:ctrl.onlinePageShowCount">
+                    <td class="td_font">
+                        <span ng-bind="x.ssoId"></span>
+                    </td>
+                    <td class="td_font">
+                        <span ng-bind="x.email"></span>
+                    </td>
+                    <td class="td_font">
+                        <span ng-bind="x.lastTime"></span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger"
+                                ng-click="ctrl.kickoutUserByEmail(x.email, x.ssoId)">
+                            踢出用户
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul id="online_page_ul" class="pagination">
+            </ul>
+        </div>
+        <!--END childPage 当前在线用户-->
+        <!--START 权限管理box-->
+        <div class="col-xs-8 from_my_box" ng-hide="!ctrl.isShowRoleBox">
+            <div class="box_header">
+                <h2>用户权限管理</h2>
+            </div>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-xs-2">用户邮箱</th>
+                    <th class="col-xs-2">当前权限</th>
+                    <th class="col-xs-2">所有权限</th>
+                    <th width="10%"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="(k,v) in ctrl.roleMapPage">
+                    <td class="td_font">
+                        <span ng-bind="k"></span>
+                    </td>
+                    <td class="td_font">
+                        <label class="label label-danger role_lab" ng-repeat="role in v"
+                               ng-bind="role.description"></label>
+                    </td>
+                    <td class="td_font">
+                        <select id="{{'sel'+$index}}" class="selectpicker show-tick form-control" multiple>
+                            <option class="role_options" ng-repeat="x in ctrl.roleList">{{x.description}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" style="margin-bottom: 10px;"
+                                ng-click="ctrl.addRoleByUsername('sel'+$index, k)">
+                            添加角色
+                        </button>
+                        <button type="button" class="btn btn-danger"
+                                ng-click="ctrl.delRoleByUsername('sel'+$index, k)">
+                            删除角色
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul id="role_page_ul" class="pagination">
+            </ul>
+        </div>
+        <!--END 权限管理box-->
+    </div>
+
+    <!--start对话框-->
+    <div class="modal fade" id="Message_Modal" data-show="true" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content message_content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <div>
+                        <img id="to_header_img" src="/static/png/default.jpg"
+                             class="header_img" alt="头像">
+                        <span id="isOnline_box">
+						    <span id="online_box" class="isOnline_dis"></span>
+                            <span id="online_text">在线</span>
+						</span>
+                    </div>
+                </div>
+                <div class="modal-body message_modal">
+                    <div id="message_body" class="message_textarea" readonly="true">
+                        <!--对话框内容-->
+                    </div>
+                </div>
+                <div id="message_footer" class="modal-footer message_modal message_input">
+                    <textarea id="input_message" class="message_textarea"
+                              ng-focus="ctrl.messageFocus()"
+                              ng-blur="ctrl.messageBlur()"
+                              ng-keydown="ctrl.enterSend($event)"></textarea>
+                    <button type="button" class="btn btn-primary send_btn"
+                            ng-click="ctrl.sendToUser()">发送
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end对话框-->
+
+    <!--START jing-->
+    <div id="loveJing" class="modal fade" data-show="true"
+         aria-hidden="true">
+        <div class="modal-dialog" id="loveJing_box">
+            <div class="modal-content" style="opacity: 0.8;">
+                <div class="modal-header">
+                    <a href="javascript:void(0);"
+                       class="close close_btn" data-dismiss="modal"
+                       aria-hidden="true" ng-click="ctrl.closeJing()"
+                       style="position: relative; z-index: 100;">&times;</a>
+                    <h4 class="modal-title panel-title"
+                        style="position: relative; z-index: 2;">
+						<span id="like1" rel="like"
+                              class="glyphicon glyphicon-heart"
+                              style="color: #e94c28;"></span>
+                        爱JING的第{{ctrl.loveday}}天
+                        <span id="like2" rel="like"
+                              class="glyphicon glyphicon-heart"
+                              style="color: #e94c28;"></span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal_img"
+                         style="position: relative; z-index: 2; font-size: 20px; letter-spacing: 3.2px;">
+                        {{ctrl.msgJing}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p style="position: relative; z-index: 2;">
+                        我们认识的第
+                        <label class="label label-danger"
+                               style="background-color: #e94c28;">{{ctrl.knowday}}</label>
+                        天
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="heart_div" class="heart" style="position: absolute; top: 50%; left: 50%; display: none;"></div>
+    <!--END jing-->
+    <ul id="user_main_ul">
+        <li><a href="javascript:void(0);" ng-click="ctrl.disUserPage()">用户信息</a></li>
+        <li><a href="javascript:void(0);" ng-click="ctrl.disRootPage()">用户管理</a></li>
+    </ul>
+</div>
+<!--END BODY-->
+
+<!--START JS-->
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/angular.min.js"></script>
+<script type="text/javascript" src="/static/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="/static/plugin/sockjs.min.js"></script>
+<script type="text/javascript" src="/static/js/userJS/app.js"></script>
+<script type="text/javascript" src="/static/js/userJS/userMainControllerJS.js"></script>
+<script type="text/javascript" src="/static/js/userJS/userServiceJS.js"></script>
+<script type="text/javascript" src="/static/js/userJS/interceptorConfig.js"></script>
+<script type="text/javascript" src="/static/js/userJS/testGoogle.js"></script>
+<script type="text/javascript" src="/static/plugin/jcrop/js/jquery.Jcrop.min.js"></script>
+<!--END JS-->
+</body>
+</html>

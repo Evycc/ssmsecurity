@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+       default-lazy-init="false">
+
+    <!--加载配置文件-->
+    <context:property-placeholder location="classpath*:properties/dataSource.properties"
+        ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath*:properties/redis.properties"
+        ignore-unresolvable="true"/>
+
+    <import resource="classpath:spring/spring-mvc.xml"/>
+    <import resource="classpath:security/security-config.xml"/>
+    <import resource="classpath:cache/redis-cache.xml"/>
+
+    <!--START redis缓存-->
+    <bean class="com.evy.jing.redis.JedisCache"
+          p:name="${redisCache.name}"
+          p:jedisManager-ref="jedisManager"
+          p:timeOut="${redisCache.timOut}"
+          p:db_index="${redisCache.index}"/>
+    <bean id="jedisManager" class="com.evy.jing.redis.JedisManager"
+          p:jedisPool-ref="jedisPool"/>
+    <!--END redis缓存-->
+
+    <!--数据库配置-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          destroy-method="close"
+          p:driverClassName="${dataSource.driver}"
+          p:url="${dataSource.url}"
+          p:username="${dataSource.username}"
+          p:password="${dataSource.password}"
+          p:maxActive="${dataSource.maxActive}"
+          p:minIdle="${dataSource.minIdle}"
+          p:poolPreparedStatements="${druid.poolPreparedStatements}"
+          p:maxPoolPreparedStatementPerConnectionSize="${druid.maxPoolPreparedStatementPerConnectionSize}">
+    </bean>
+
+    <!--开启事务-->
+    <bean id="dataSourceTransactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          p:dataSource-ref="dataSource"/>
+
+    <!--SqlSessionFactory配置
+    configLocation指定MyBatis核心配置文件-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:configLocation="classpath:mybatis/mybatis-config.xml"
+          p:mapperLocations="classpath*:com/evy/jing/mapper/*.xml"/>
+
+    <!--Mapper Bean -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+          p:basePackage="com.evy.jing.mapper"
+          p:sqlSessionFactoryBeanName="sqlSessionFactory"/>
+
+    <!--START 只对业务逻辑层进行事务-->
+    <aop:config expose-proxy="true" proxy-target-class="true">
+        <aop:pointcut id="txPoitcut" expression="execution(* com.evy.jing.service.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoitcut"/>
+    </aop:config>
+
+    <tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--END 只对业务逻辑层进行事务-->
+
+    <!--START Mail-->
+    <!--发送人邮箱配置-->
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"
+          p:port="465"
+          p:host="smtp.163.com"
+          p:username="evyjunjun@163.com"
+          p:password="627935110tai">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.socketFactory.port">465</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--发送对象配置-->
+    <bean id="messageHelper" class="org.springframework.mail.javamail.MimeMessageHelper"
+          p:from="#{javaMailSender.username}"
+          p:subject="密码更改请求">
+        <constructor-arg index="0" value="#{javaMailSender.createMimeMessage()}"/>
+        <constructor-arg index="1" value="true"/>
+        <constructor-arg index="2" value="UTF-8"/>
+    </bean>
+    <!--END Mail-->
+
+    <!--禁止缓存类-->
+    <bean class="com.evy.jing.model.ExcludeCacheModel">
+        <property name="name">
+            <list>
+                <value>com.evy.jing.mapper.SeUserMapper.selectListPage</value>
+            </list>
+        </property>
+    </bean>
+</beans>

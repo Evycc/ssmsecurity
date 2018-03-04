@@ -1,0 +1,14 @@
+/*START 尾部*/
+#footer_row{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+#fotter{
+	text-align: center;
+	padding: 40px 0 0 0;
+}
+#fotter p{
+	font-size: 20px;
+}
+/*END 尾部*/

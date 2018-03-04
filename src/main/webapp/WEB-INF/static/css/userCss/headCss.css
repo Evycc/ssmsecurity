@@ -1,0 +1,98 @@
+/*START 全局设置*/
+body a{
+	text-decoration: none !important;
+}
+
+#headNav{
+	opacity: 0.8;
+}
+#head{
+	margin-top: 10px;
+}
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+	background-color: #2dbe60 !important;
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+	background-color: #2dbe60 !important;
+}
+.nav>li>a:focus, .nav>li>a:hover{
+	background-color: #2dbe60 !important;
+}
+/*END 全局设置*/
+
+/*START 头像样式*/
+#headImgDiv{
+	width: 100px;
+	height: 100px;
+}
+#headImg{
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+#user_head_div{
+	float: right;
+	top: 50px;
+	left: 140px;
+	position: relative;
+}
+#myId h1{
+	float: right;
+}
+#myId a{
+	width: 200px;
+	text-align: right;
+	float: right;
+}
+/*END 头像样式*/
+
+/*START 未登录时头像导航*/
+#order_head_nav_div{
+	float: right;
+	top: 120px;
+	margin-right: 10px;
+}
+#order_head_nav{
+	background-color: #ffffff;
+}
+#order_head_nav li{
+	font-size: 30px;
+}
+#user_Nav_Ul_Div{
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0;
+}
+#user_Nav_Ul_Div:before{
+	position: absolute;
+	display: inline-block;
+	content: "";
+	border: 10px solid transparent;
+	border-bottom-color: rgb(75, 168, 220);
+	transform: rotate(-90deg);
+	left: -20px;
+	top: 134px;
+}
+.user_nav_box_ul{
+	background-color: rgb(30, 146, 211);
+	opacity:0.8;
+	filter:alpha(opacity=40); /* 针对 IE8 以及更早的版本 */
+	list-style: none;
+}
+.user_nav_box_ul li{
+	font-size: 20px;
+	padding: 12px 0 12px 0;
+}
+.user_nav_box_ul li span{
+	color: #fff;
+}
+.user_nav_box_ul li a{
+	color: #fff;
+}
+#noLogin_ul{
+	position: absolute;
+	top: 76px;
+}
+/*END 未登录时头像导航*/
